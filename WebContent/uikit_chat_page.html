@@ -1,0 +1,701 @@
+
+<!doctype html>
+<!--[if lte IE 9]> <html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+
+    <link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
+
+    <title>Chat Socket Based on Spring Framework</title>
+
+
+    <!-- uikit -->
+    <link rel="stylesheet" href="assets/uikit/css/uikit.almost-flat.min.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="assets/css/main.min.css" media="all">
+
+
+
+</head>
+<body class=" sidebar_main_swipe">
+    
+
+    
+  
+
+    <div id="page_content">
+        <div id="page_content_inner" style="margin-top:-50px">
+			
+			
+            <div class="uk-width-medium-9-10 uk-container-center">
+                <div class="uk-grid uk-grid-collapse" data-uk-grid-margin>
+                    
+                    <div class="uk-width-large-2-5" >
+                    	<div class="uk-grid">
+                    		
+	                        <div class="uk-width-large-1">
+	                            <div class="md-card" data-uk-sticky="{ top: 0, media: 960 }">
+	                                <div class="md-card-content">
+	                                	
+	                                	
+	                                	<div class="uk-width-large-1">
+											<div>
+							                        <div class="md-card-head md-bg-light-blue-600">
+							                            <div class="uk-text-center">
+							                                <img class="md-card-head-avatar" src="assets/img/avatars/avatar_11.png" alt=""/>
+							                            </div>
+							                            <h2 class="md-card-head-text uk-text-center md-color-white">
+							                                <strong><span id="my_name" class="uk-text"></span></strong>
+							                            </h2>
+							                        </div>
+							                        <div class="md-card-content">
+														 <div class="uk-margin-small-bottom">
+					                                        <h3 class="heading_c uk-margin-bottom">Contact List</h3>
+					                                        <div class="md-input-wrapper">
+					                                            <input type="text" class="md-input" id="search_key" disabled placeholder="Search..." style="min-height:40px;background: url(assets/img/search_icon.png) no-repeat 10px center;border: solid 1px #ccc;padding: 9px 10px 9px 40px; -webkit-transition: all .5s;-moz-transition: all .5s;transition: all .5s;">
+					                                            <div class="md-input-bar"></div>
+					                                        </div>
+					                                    </div>
+							                        </div>
+							                </div>
+			                    		</div>
+			                    		
+			                    		
+	                                </div>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="uk-width-large-1">
+	                            <div class="md-card" style="min-height:400px">
+		                    		<div class="md-card-content">
+				                        <div class="md-list-outside-wrapper" id="scroll_ul">
+				                            <label class="uk-text uk-text-italic" id="contact_null" style="display:none">No Contact Available</label>
+				                            <ul class="md-list md-list-addon md-list-outside" id="chat_user_list">
+				                                
+				                            </ul>
+				                            
+				                        </div>
+		                    		</div>
+		                    	</div>
+	                        </div>
+	                    </div>
+                    </div>
+                
+                
+                    <div class="uk-width-large-3-5" style="display:none" id="chat_form">
+                        <div class="md-card md-card-single">
+                        	
+                            <div class="md-card-toolbar">
+                            	<!-- 
+                                <div class="md-card-toolbar-actions hidden-print">
+                                    <div class="md-card-dropdown" data-uk-dropdown="{pos:'bottom-right'}">
+                                        <i class="md-icon material-icons">&#xE3B7;</i>
+                                        <div class="uk-dropdown">
+                                            <ul class="uk-nav" id="chat_colors">
+                                                <li class="uk-nav-header">Message Colors</li>
+                                                <li class="uk-active"><a href="#" data-chat-color="chat_box_colors_a">Grey/Green</a></li>
+                                                <li><a href="#" data-chat-color="chat_box_colors_b">Blue/Dark Blue</a></li>
+                                                <li><a href="#" data-chat-color="chat_box_colors_c">Orange/Light Gray</a></li>
+                                                <li><a href="#" data-chat-color="chat_box_colors_d">Deep Purple/Light Grey</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <i class="md-icon  material-icons">&#xE5CD;</i> 
+                                </div>
+                                -->
+                                <h3 class="md-card-toolbar-heading-text large">
+                                    <span class="uk-text-muted">Chat with</span> <a href="#!"><strong><label id="head_cname"></label><strong></a>
+                                </h3>
+                            </div>
+                            <div class="md-card-content padding-reset">
+                                <div class="chat_box_wrapper">
+                                    <div class="chat_box touchscroll chat_box_colors_a" id="chat_box" style="min-height:400px">
+                                        
+                                        <!--  
+                                        <div class="chat_message_wrapper">
+                                            <div class="chat_user_avatar">
+                                                <img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/>
+                                            </div>
+                                            <ul class="chat_message">
+                                                <li>
+                                                    <p> Jadi Kapan nikah bang? </p>
+                                                </li>
+                                                <li>
+                                                    <p> Lorem ipsum dolor sit amet.<span class="chat_message_time">13:38</span> </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        -->
+                                        <div id="chat_box_ctc"></div>
+                                        
+                                       
+                                    </div>
+                                    <div class="chat_submit_box" id="chat_submit_box">
+                                        <div class="uk-input-group">
+                                            <input type="text" class="md-input" name="submit_message" id="message_txt" placeholder="Send message">
+                                            <span class="uk-input-group-addon">
+                                                <a href="#"><i class="material-icons md-24" id="submit_message">&#xE163;</i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+			
+			
+        </div>
+    </div>
+    
+    
+    <div class="uk-modal uk-modal-dialog-replace" data-canter="false" data-bgclose="false" id="global_modal" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+        <div class="uk-modal-dialog uk-modal-dialog-medium" id="global_modal_dialog">
+            <button type="button" class="uk-modal-close uk-close" id="global_modal_close"></button>                                 
+            
+            <div id="global_modal_content">
+            	<div class="md-card-content">
+            		<div class="uk-grid">
+	            		<div class="uk-width-medium-1">
+	            		
+	            			<div class="uk-grid">
+	            			   <h3 class="heading_a">Regist Your Self</h3>
+                               <div class="uk-width-medium-1" style="margin-top:30px">
+                                    <label>Input Your Name</label>
+                                    <input type="text" class="md-input" id="text_regist" />
+                               </div>
+                               
+                               <div class="uk-width-medium-2-3"></div>
+                               <div class="uk-width-medium-1-3 md-btn md-btn-primary" id="btn_regist" style="margin-top:30px">Regist</div>
+                            </div>
+	            			
+	            		</div>
+	            	</div>
+            	</div>
+            </div>
+        	
+        	<div class="uk-modal-caption"><label style="text-color:black">Caption</label></div>
+        </div>
+    </div>
+
+
+
+    <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+
+
+
+
+
+
+    <!-- common functions -->
+    <script src="assets/js/common.min.js"></script>
+    <!-- uikit functions -->
+    <script src="assets/js/uikit_custom.min.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="assets/js/altair_admin_common.min.js"></script> 
+    
+    <script src="assets/js/underscore.js"></script> 
+
+    <!-- page specific plugins -->
+
+    <!--  chat functions -->
+    <script src="assets/js/pages/page_chat.min.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+        });
+    </script>
+
+
+
+	<script type="text/javascript">
+	
+		var modal, modal_prompt, modal_prompt_name=null, user_data;
+		document.getElementById("scroll_ul").style.height='410px';
+    	document.getElementById("scroll_ul").style.overflow='auto';
+    	
+    	document.getElementById("chat_box").style.height='410px';
+    	document.getElementById("chat_box").style.overflow='auto';
+	    var valid=false;
+		var uidsent = null;
+		
+	    $(document).ready(function() {
+	    
+	        //MOODAL PROMPT SHOW
+	        modal = UIkit.modal("#global_modal");
+
+	        /**
+	        modal_prompt = UIkit.modal.prompt(
+	        									'Regist Your Self:',
+	        									'',
+	        									function(val){
+	        										UIkit.modal.alert('Hello '+(val || 'Mr noname')+', Welcome.');
+	        										modal_prompt_name = val;
+	        										localStorage.setItem('prompt_name', modal_prompt_name);
+	        									});
+	        //modal_prompt.show();
+	        
+	        **/
+	        //$("#chat_form").show();
+	        if(localStorage.getItem('cache_user_name')){
+	        	modal.hide();
+	        	socket();
+	        	UIkit.notify(localStorage.getItem('cache_user_name').toUpperCase()+" Already Registered! Welcome...", {status:'success',pos:'top-right'});
+	        	$("#my_name").text(localStorage.getItem('cache_user_name').toUpperCase());
+	        }else{
+	        	modal.show();
+	        }
+	        
+	       
+	    });
+	    
+	    $("#text_regist").keydown(function(){
+	    	if (event.keyCode == 13) {
+	    		set_user_on_cache($(this).val());
+	    	}
+	    });
+	    
+	    $("#message_txt").keydown(function(){
+	    	if (event.keyCode == 13) {
+	    		if(uidsent != null || _.isEmpty(uidsent)== false || _.isEmpty($(this).val())== false){
+	    			sent_msg();
+	    		}
+	    	}
+	    });
+	    
+	    $("#submit_message").click(function(){
+		    if(uidsent != null || _.isEmpty(uidsent)== false || _.isEmpty($("#message_txt").val())== false){
+	    		sent_msg();
+	    	}
+		});
+	    
+	    $("#btn_regist").click(function(){
+		    set_user_on_cache($("#text_regist").val());
+		});
+		
+				
+		
+		function set_user_on_cache(name){
+			if(name == "" || name == null || _.isEmpty(name)== true){
+		    	UIkit.notify("Type Your Name First", {status:'warning',pos:'bottom-center'});
+		    	modal.show();
+		    }else{
+		    	user_data  = {
+		        	"name" : name,
+		        	"regist_date" : new Date(),
+		            "isactive" : 1,
+		            "recordstatus" : 1
+	        	}
+	        	
+	        	var json  = {"name" : name}
+			    			    
+			    $.ajax({
+	                type: "POST",
+	                dataType:"JSON",
+	                url: "create_user",
+	                async: false,
+	                data: json,
+                	success: function (data) {
+                		//console.log(data);
+                		
+                		if(data.err == 'Success'){
+                			localStorage.setItem('cache_user_name', data.rsm.name);
+                			localStorage.setItem('cache_user_id', data.rsm.id);
+					    	$("#global_modal_close").click();
+					    	UIkit.notify("Welcome "+name, {status:'success',pos:'top-right'});
+					    	$("#my_name").text(localStorage.getItem('cache_user_name').toUpperCase());
+					    	socket();
+                		}else{
+                			if(localStorage.getItem('cache_user_name')){
+                				UIkit.notify(localStorage.getItem('cache_user_name')+" Already Registered! Welcome...", {status:'warning',pos:'top-right'});
+                			}else{
+                				UIkit.notify(name+" Already Registered! Welcome...", {status:'warning',pos:'top-right'});
+                				localStorage.setItem('cache_user_name', name);
+                			}  
+                			modal.hide();    
+                		}
+                	},
+                	fail:function(data){
+                		//console.log("stat: "+data);
+                		UIkit.notify("Cant Registered Your Name", {status:'warning',pos:'top-right'});
+                		modal.show();
+                	}
+                });
+			    
+				
+		    }
+		}
+		
+		
+		$('#search_key').on('keyup', function () {
+	        var value = this.value;
+	        $("#chat_user_list li").each(function() {
+	          if ($(this).text().search(new RegExp(value, "i")) > -1) {
+	            $(this).show();
+	          } else {
+	            $(this).hide();
+	          }
+	        });
+	    });
+	    
+	    $("#chat_user_list").on("click","li", function(){
+	        $("#chat_user_list li").removeClass('md-list-item-active');
+	        $(this).addClass('md-list-item-active');
+	        $("#chat_form").hide().show("slow");
+	        $("#head_cname").text($(this).attr("uname"));
+	        
+	        uidsent = $(this).attr("uid_from");
+	        $("#chat_box_ctc").empty();
+	        $("#message_txt").val('').focus();
+	        
+	        read_msg(uidsent,localStorage.getItem('cache_user_id'));
+	    });
+	    
+	    
+	    
+	    
+	    
+	    
+	    function read_msg(uid_from, uid_me){
+	    	var json = {
+	    		"uid_from" : uid_from,
+	    		"uid_me"   : uid_me
+	    	};
+	    	$.ajax({
+				type: "POST",
+				dataType:"JSON",
+				url: "read_msg",
+				async: false,
+				data: json,
+				success: function (data) {
+					if(_.isEmpty(data.rsm)== false){
+						console.log(data.rsm);
+						$("#chat_box_ctc").empty();
+						$.each(data.rsm, function (i, val) {
+							if(val.uid_to != localStorage.getItem('cache_user_id')){
+								$("#chat_box_ctc").append(
+									'<div class="chat_message_wrapper chat_message_right">'+
+										'<div class="chat_user_avatar">'+
+											'<img class="md-user-image" src="assets/img/avatars/avatar_03_tn.png" alt=""/>'+
+					                    '</div>'+
+										'<ul class="chat_message">'+
+											'<li><p>'+
+												val.text+
+												'<span class="chat_message_time">'+val.chatdate+'</span>'+
+					                        '</p></li>'+
+					                    '</ul>'+
+					               '</div>'
+								);
+							}else{
+								$("#chat_box_ctc").append(
+									'<div class="chat_message_wrapper">'+
+										'<div class="chat_user_avatar">'+
+											'<img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/>'+
+					                    '</div>'+
+										'<ul class="chat_message">'+
+											'<li><p>'+
+												val.text+
+												'<span class="chat_message_time">'+val.chatdate+'</span>'+
+					                        '</p></li>'+
+					                    '</ul>'+
+					               '</div>'
+					            );
+							}
+							
+						});
+					}
+					$("#chat_box").animate({
+					     scrollTop: $("#chat_box_ctc").height()
+					},350);
+					
+					get_contact_list();
+				}
+			});
+	    }
+	    
+	    
+	    function sent_msg(){
+			console.log("sent_msg: "+uidsent);
+			
+			var json = {
+	    		"uid_to"  : uidsent,
+	    		"uid_me"  : localStorage.getItem('cache_user_id'),
+	    		"text"    : $("#message_txt").val()
+	    	};
+	    	$.ajax({
+				type: "POST",
+				dataType:"JSON",
+				url: "sent_msg",
+				async: false,
+				data: json,
+				success: function (data) {
+					if(_.isEmpty(data.rsm)== false){
+						console.log(data.rsm);
+						
+						$("#chat_box_ctc").append(
+							'<div class="chat_message_wrapper chat_message_right">'+
+								'<div class="chat_user_avatar">'+
+									'<img class="md-user-image" src="assets/img/avatars/avatar_03_tn.png" alt=""/>'+
+			                    '</div>'+
+								'<ul class="chat_message">'+
+									'<li><p>'+
+										$("#message_txt").val()+
+										'<span class="chat_message_time">13:34</span>'+
+			                        '</p></li>'+
+			                    '</ul>'+
+			               '</div>'
+						);
+						$("#message_txt").val('').focus();
+						
+						$("#chat_box").animate({
+					        scrollTop: $("#chat_box_ctc").height()
+					    },350);
+						
+						$.each(data.rsm, function (i, val) {
+						
+						});
+					}
+				}
+			});
+		
+		}
+	    	    
+   
+	    
+	    function get_contact_list(){
+	    	$.ajax({
+		        type: "GET",
+		        dataType:"JSON",
+		        url: "get_contact_list",
+		        async: false,
+		        success: function (data) {
+		        	if(_.isEmpty(data.rsm)== false){
+		        		$("#chat_user_list").empty();
+		        		$("#search_key").removeAttr("disabled");
+		        		$.each(data.rsm, function (i, val) {
+		        			var isactive = ''; 
+		        			if(val.isactive == 1){
+		        				isactive = 'success';
+		        			}else{
+		        				isactive = 'danger';
+		        			}
+		        			
+		        			if(val.name != localStorage.getItem('cache_user_name')){
+		        				
+		        				var json  = {"uid_from" : val.id, "uid_my": localStorage.getItem('cache_user_id')}
+		        				var ttl_msg ='', cdate='', tprevw='';
+		        				
+		        				$.ajax({
+							        type: "POST",
+							        dataType:"JSON",
+							        url: "get_msg_unread",
+							        async: false,
+							        data: json,
+							        success: function (unread_data) {
+							        	
+							        	
+							        	if(_.isEmpty(unread_data.rsm)== false){
+							        		//console.log(unread_data.rsm);
+							        		$.each(unread_data.rsm, function (i, val) {
+							        			if(val.total_unread > 0){
+							        				ttl_msg = '<span class="uk-text-small uk-text-muted uk-text-truncate uk-badge">'+val.total_unread+'</span>';
+							        				cdate = '<span class="uk-text-italic uk-text-muted">'+val.cdate+'</span>'; 
+							        				tprevw = '<span class="uk-text-small uk-text-muted uk-text-truncate">'+val.tmsg+'</span>';
+							        			}else{
+							        				tprevw = '<span class="uk-text-small uk-text-muted uk-text-truncate">Joined on '+val.regist_date+'. Lets Talk</span>';
+							        			}					        			
+							        		});
+							        	}
+							        	
+							      	}
+							    });
+							       	
+							    	
+			        			//console.log(isactive);
+				       			$("#chat_user_list").append(
+				       					'<li uname="'+val.name+'" uid_from="'+val.id+'">'+
+											'<div class="md-list-addon-element">'+
+												'<span class="element-status element-status-'+isactive+'"></span>'+
+												'<img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_01_tn.png" alt=""/>'+
+											'</div>'+
+											'<div class="md-list-content">'+
+												'<div class="md-list-action-placeholder"></div>'+
+												'<div class="md-list-heading">'+
+													'<div class="uk-grid">'+
+														'<div class="uk-width-small-1-3">'+val.name.toUpperCase()+'</div>'+
+														'<div class="uk-width-small-2-3" align="right">'+cdate+'</div>'+
+													'</div>'+
+												'</div>'+
+												'<div class="uk-grid">'+
+													'<div class="uk-width-small-4-5">'+
+														tprevw+
+													'</div>'+
+													'<div class="uk-width-small-1-5" align="right">'+
+														ttl_msg+
+													'</div>'+
+												'</div>'+
+												
+											'</div>'+
+										'</li>'
+								);
+							}
+			       		});
+			       		
+		        	}else{
+		        		$("#search_key").attr("disabled");
+		        		$("#contact_null").show();
+		        	}                   	
+		       	}
+		    });
+	    }
+	    
+	    
+	    function set_user_offline(name){
+	    	console.log(name+" is logout");
+	    }
+	    
+		    
+		    
+		function socket(){    
+		    //WEB SOCKET PART CLIEN SIDE
+		    var Chat = {};
+	
+	        Chat.socket = null;
+	        
+	        Chat.connect = (function(host) {
+	            if ('WebSocket' in window) {
+	                Chat.socket = new WebSocket(host);
+	            } else if ('MozWebSocket' in window) {
+	                Chat.socket = new MozWebSocket(host);
+	            } else {
+	                UIkit.notify("WebSocket is not supported by this browser", {status:'warning',pos:'bottom-center'});
+	                return;
+	            }
+	
+	            Chat.socket.onopen = function () {
+	                console.log('Info: WebSocket connection opened.');	      
+	                /**          
+	                document.getElementById('chat').onkeydown = function(event) {
+	                    if (event.keyCode == 13) {
+	                        Chat.sendMessage();
+	                    }
+	                };
+	                **/
+	                get_contact_list();
+	            };
+	
+	            Chat.socket.onclose = function () {
+	                document.getElementById('chat').onkeydown = null;
+	                console.log('Info: WebSocket closed.');
+	                get_contact_list();
+	                //Chat.socket.send("user_closed|"+localStorage.getItem('cache_user_name'));
+	            };
+	
+	            Chat.socket.onmessage = function (message) {
+	                
+	                var msg =  message.data.split("|");
+	                get_contact_list();
+	                
+	                console.log(message.data);
+	                
+	                if(msg[0] == 'user_closed'){
+	                	console.log(msg[1]);
+	                	set_user_offline(localStorage.getItem('cache_user_name'));
+	                }else{
+	                
+	                }
+	                console.log(msg[0]);
+	                
+	                read_msg(uidsent,localStorage.getItem('cache_user_id'));
+	            };
+	        });
+	
+	        Chat.initialize = function() {
+	            if (window.location.protocol == 'http:') {
+	                Chat.connect('ws://' + window.location.host + '/ccpx/websocket/chat');
+	            } else {
+	                Chat.connect('wss://' + window.location.host + '/ccpx/websocket/chat');
+	            }
+	        };
+	
+	        Chat.sendMessage = (function() {
+	            var message = document.getElementById('chat').value;
+	            if (message != '') {
+	                Chat.socket.send(message);
+	                document.getElementById('chat').value = '';
+	            }
+	        });
+	
+			/**
+	        var Console = {};
+	        Console.log = (function(message) {
+	            var console = document.getElementById('console');
+	            var p = document.createElement('p');
+	            p.style.wordWrap = 'break-word';
+	            p.innerHTML = message;
+	            console.appendChild(p);
+	            while (console.childNodes.length > 25) {
+	                console.removeChild(console.firstChild);
+	            }
+	            console.scrollTop = console.scrollHeight;
+	        });
+			**/
+	        Chat.initialize();
+		    }
+		    
+	</script>
+
+
+
+
+
+
+</body>
+</html>

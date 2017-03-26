@@ -1,0 +1,3 @@
+eclipse.preferences.version=1
+validator.Checked=src/config,WebContent/scripts/jquery.min.js,WebContent/js,WebContent/bootstrap/js/jquery.min.js
+validator.Unchecked=
